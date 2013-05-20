@@ -48,7 +48,7 @@ on init
 
 sysclktz 0
 
-loglevel 3
+loglevel 8
 
 # Vibetonz
     export VIBE_PIPE_PATH /dev/pipes
