@@ -5,26 +5,30 @@
 /sbin/busybox mount -t rootfs -o remount,rw rootfs
 
 ## Create the kernel data directory
-if [ ! -d /data/.dream ];
+if [ ! -d /data/.agat ];
 then
-  mkdir /data/.dream
-  chmod 777 /data/.dream
+  mkdir /data/.agat
+  chmod 777 /data/.agat
 fi
 
 ## Enable "post-init" ...
-if [ -f /data/.dream/post-init.log ];
+if [ -f /data/.agat/post-init.log ];
 then
   # BackUp old post-init log
-  mv /data/.dream/post-init.log /data/.dream/post-init.log.BAK
+  mv /data/.agat/post-init.log /data/.agat/post-init.log.BAK
 fi
 
 # Start logging
-date >/data/.dream/post-init.log
-exec >>/data/.dream/post-init.log 2>&1
+date >/data/.agat/post-init.log
+exec >>/data/.agat/post-init.log 2>&1
 
 echo "Running Post-Init Script"
 
+## install Kernel related Apps etc
+/sbin/busybox sh /sbin/ext/install.sh
+
 # Remount FileSys RO
 /sbin/busybox mount -t rootfs -o remount,ro rootfs
+
 
 echo "Post-init finished ..."
