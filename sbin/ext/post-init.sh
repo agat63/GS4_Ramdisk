@@ -22,10 +22,10 @@ fi
 date >/data/.agat/post-init.log
 exec >>/data/.agat/post-init.log 2>&1
 
-echo "Running Post-Init Script"
-
 ## install Kernel related Apps etc
 /sbin/busybox sh /sbin/ext/install.sh
+
+echo "Running Post-Init Script"
 
 # Remount FileSys RO
 /sbin/busybox mount -t rootfs -o remount,ro rootfs
