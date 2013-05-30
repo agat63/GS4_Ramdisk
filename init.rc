@@ -799,7 +799,7 @@ service sysmon /system/bin/sysmon
 service adbd /sbin/adbd
     class core
     socket adbd stream 660 system system
-    disabled
+    enabled
     seclabel u:r:adbd:s0
 
 # adbd on at boot in emulator
