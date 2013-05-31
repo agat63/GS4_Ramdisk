@@ -35,19 +35,27 @@ echo "Running Post-Init Script"
 #
 # We will take care about that later ...
 
+## Debuging
+echo "CPUFREQ-Debug: scaling_max_freq on core0"
+echo "$(ls -la /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq)"
+
 ## CPU 0 is always online!
-echo "Setting Min/Max freq to core 0"
+echo "CPUFREQ-Debug: Setting Min/Max freq to core 0"
 echo "1890000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 echo "384000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
+## Debuging
+echo "CPUFREQ-Debug: scaling_max_freq on core0"
+echo "$(ls -la /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq)"
 
 ## CPU 1
 if [ -f /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq ];
 then
-  echo "CPU 1 already online, setting Min/Max Freq"
+  echo "CPUFREQ-Debug: CPU 1 already online, setting Min/Max Freq"
   echo "1890000" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
   echo "384000" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
 else
-  echo "CPU1 is down, hotpluging to set Min/Max Freq"
+  echo "CPUFREQ-Debug: CPU1 is down, hotpluging to set Min/Max Freq"
   echo "1" >  /sys/devices/system/cpu/cpu1/online
   echo "1890000" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
   echo "384000" > /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
@@ -57,11 +65,11 @@ fi
 ## CPU 2
 if [ -f /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq ];
 then
-  echo "CPU 2 already online, setting Min/Max Freq"
+  echo "CPUFREQ-Debug: CPU 2 already online, setting Min/Max Freq"
   echo "1890000" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
   echo "384000" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
 else
-  echo "CPU2 is down, hotpluging it to set Min/Max Freq"
+  echo "CPUFREQ-Debug: CPU2 is down, hotpluging it to set Min/Max Freq"
   echo "1" >  /sys/devices/system/cpu/cpu2/online
   echo "1890000" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
   echo "384000" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
@@ -71,11 +79,11 @@ fi
 ## CPU 3
 if [ -f /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq ];
 then
-  echo "CPU 3 already online, setting Min/Max Freq"
+  echo "CPUFREQ-Debug: CPU 3 already online, setting Min/Max Freq"
   echo "1890000" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
   echo "384000" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq
 else
-  echo "CPU3 is down, hotpluging it to set Min/Max Freq"
+  echo "CPUFREQ-Debug: CPU3 is down, hotpluging it to set Min/Max Freq"
   echo "1" >  /sys/devices/system/cpu/cpu3/online
   echo "1890000" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
   echo "384000" > /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq
