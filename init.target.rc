@@ -135,6 +135,11 @@ service qcamerasvr /system/bin/mm-qcamera-daemon
 #    user system
 #    group gps qcom_oncrpc net_raw
 
+service thermald /system/bin/thermald
+   class main
+   user root
+   group root
+   disabled
 
 service thermal-engine /system/bin/thermal-engine
    class main
@@ -148,6 +153,10 @@ on property:qcom.thermal=thermald
 on property:qcom.thermal=thermal-engine
     start thermal-engine
 
+# service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
+#    user root
+#    disabled
+
 service rf4ce /system/bin/rf4ce
    class main
    user root
@@ -157,15 +166,6 @@ service qosmgrd /system/bin/qosmgr /system/etc/qosmgr_rules.xml
    user system
    group system
    disabled
-   
-# service thermald /system/bin/thermald
-#    class main
-#    user root
-#    group root
-
-#service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
-#    user root
-#    disabled
 
 service kickstart /system/bin/qcks -i /firmware-mdm/image/
     user root
