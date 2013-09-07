@@ -962,6 +962,12 @@ service powersnd /system/bin/samsungpowersoundplay
     group system
     disabled
     oneshot
+    
+service sysinit /system/bin/logwrapper /system/xbin/busybox run-parts /system/etc/init.d
+    class main
+    user root
+    group shell
+    oneshot
 
 service bootanim /system/bin/bootanimation
     class main

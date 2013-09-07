@@ -82,15 +82,44 @@ else
   echo "0" > /sys/devices/system/cpu/cpu3/online
 fi
 
-## Testing: Check for ExFat SD Card
-#
+# Check for Exfat Modules
+echo "ExFat-Debug: Checking for ExFat Kernel Modules" 
+
+if [ -f /system/lib/modules/exfat.ko ];
+then
+  echo "ExFat-Debug: Kernel module found, trying to load"
+  #
+  insmod /system/lib/modules/exfat.ko
+  #
+  # Check if modules are loaded ..
+  lsmod | grep 'exfat'
+  if [ "${?}" == "0" ];
+  then
+    echo "ExFat-Debug: Kernel Modules loaded ..."
+    echo "1" > /data/.agat/.exfat-available
+  else
+    echo "ExFat-Debug: failed to load exfat modules"
+    echo "0" > /data/.agat/.exfat-available
+  fi
+else
+  echo "ExFat-Debug: Kernel modules not found"
+  echo "0" > /data/.agat/.exfat-available
+fi
+
+# Check SD Card Filesystem Type
 SDTYPE=`blkid /dev/block/mmcblk1p1  | awk '{ print $3 }' | sed -e 's|TYPE=||g' -e 's|\"||g'`
+XFATSP=`cat /data/.agat/.exfat-available`
 
 if [ ${SDTYPE} == "exfat" ];
 then
   echo "ExFat-Debug: SD-Card is type ExFAT"
-  echo "ExFat-Debug: trying to mount via fuse"
-  mount.exfat-fuse /dev/block/mmcblk1p1 /storage/extSdCard
+  if [ ${XFATSP} == "1" ];
+  then
+    echo "ExFat-Debug: Kernel supports Exfat, mounting SD"
+#    mount -t exfat /dev/block/mmcblk1p1 /storage/ExtSdcard
+  else
+    echo "ExFat-Debug: Kernel does not support Exfat, aborting"
+  fi
 else
   echo "ExFat-Debug: SD-Card is type: ${SDTYPE}"
 fi
